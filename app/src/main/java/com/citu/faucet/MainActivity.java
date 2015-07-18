@@ -10,7 +10,10 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-
+/*
+    Adding a comment for testing 1
+    Adding a comment for testing 2
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
