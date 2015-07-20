@@ -12,14 +12,16 @@ import android.widget.ListAdapter;
  * Created by metalgear8019 on 7/17/2015.
  */
 public class ImageAdapter extends BaseAdapter {
+
     private Context mContext;
 
     public ImageAdapter(Context c) {
         mContext = c;
+        initAssets();
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return FaucetGrid.count;
     }
 
     public Object getItem(int position) {
@@ -28,6 +30,16 @@ public class ImageAdapter extends BaseAdapter {
 
     public long getItemId(int position) {
         return 0;
+    }
+
+    public void initAssets() {
+        FaucetGrid.count = 16;
+        FaucetGrid.setFaucetGridSize(FaucetGrid.count);
+        for (int i = 0; i < FaucetGrid.count; i++)
+        {
+            FaucetGrid.faucetStates[i] = false;
+            FaucetGrid.updateFaucetState(i);
+        }
     }
 
     // create a new ImageView for each item referenced by the Adapter
@@ -43,22 +55,7 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(mThumbIds[position]);
+        imageView.setImageResource(FaucetGrid.faucets[position]);
         return imageView;
     }
-
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.mipmap.sample_2, R.mipmap.sample_3,
-            R.mipmap.sample_4, R.mipmap.sample_5,
-            R.mipmap.sample_6, R.mipmap.sample_7,
-            R.mipmap.sample_0, R.mipmap.sample_1,
-            R.mipmap.sample_2, R.mipmap.sample_3,
-            R.mipmap.sample_4, R.mipmap.sample_5,
-            R.mipmap.sample_6, R.mipmap.sample_7,
-            R.mipmap.sample_0, R.mipmap.sample_1,
-            R.mipmap.sample_2, R.mipmap.sample_3,
-            R.mipmap.sample_4, R.mipmap.sample_5,
-            R.mipmap.sample_6, R.mipmap.sample_7
-    };
 }

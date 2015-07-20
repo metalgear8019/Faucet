@@ -1,0 +1,33 @@
+package com.citu.faucet;
+
+/**
+ * Created by metalgear8019 on 7/20/2015.
+ */
+public class FaucetGrid {
+    public static boolean[] faucetStates; // true if faucet is open
+    public static Integer[] faucets; // references to images
+    public static int count; // number of elements, grid size x grid size
+
+    public static void setFaucetGridSize(int size) {
+        faucetStates = new boolean[size];
+        faucets = new Integer[size];
+    }
+
+    public static void reverseFaucetState(int position) {
+        faucetStates[position] = !faucetStates[position];
+    }
+
+    public static int getResourceAt(int position) {
+        if (faucetStates[position])
+            return R.mipmap.test;
+        else
+            return R.mipmap.faucet;
+    }
+
+    public static void updateFaucetState(int position) {
+        if (faucetStates[position])
+            faucets[position] = R.mipmap.test;
+        else
+            faucets[position] = R.mipmap.faucet;
+    }
+}
