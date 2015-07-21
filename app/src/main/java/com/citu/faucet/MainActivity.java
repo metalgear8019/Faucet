@@ -19,8 +19,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
+        final ImageAdapter im = new ImageAdapter(this);
+        FaucetGrid.initAssets(im.getContext(), 4);
+        final GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setNumColumns((int) Math.sqrt(FaucetGrid.count));
+        gridview.setAdapter(im);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -32,6 +35,29 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setImageResource(FaucetGrid.getResourceAt(position));
             }
         });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!Thread.interrupted()) {
+                    try {
+                        Thread.sleep(3000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int pos = (int) (Math.random() * FaucetGrid.count);
+                                FaucetGrid.reverseFaucetState(pos);
+                                ImageView imageView = FaucetGrid.ivList[pos];
+                                imageView.setImageResource(FaucetGrid.getResourceAt(pos));
+                                imageView.invalidate();
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     @Override

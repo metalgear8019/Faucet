@@ -17,7 +17,6 @@ public class ImageAdapter extends BaseAdapter {
 
     public ImageAdapter(Context c) {
         mContext = c;
-        initAssets();
     }
 
     public int getCount() {
@@ -32,23 +31,16 @@ public class ImageAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void initAssets() {
-        FaucetGrid.count = 16;
-        FaucetGrid.setFaucetGridSize(FaucetGrid.count);
-        for (int i = 0; i < FaucetGrid.count; i++)
-        {
-            FaucetGrid.faucetStates[i] = false;
-            FaucetGrid.updateFaucetState(i);
-        }
-    }
+    public Context getContext() { return mContext; }
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
+            int dimen = 185; //parent.getWidth()/FaucetGrid.gridSize - 10;
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(185, 185));
+            imageView.setLayoutParams(new GridView.LayoutParams(dimen, dimen));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(1, 1, 1, 1);
         } else {
@@ -56,6 +48,7 @@ public class ImageAdapter extends BaseAdapter {
         }
 
         imageView.setImageResource(FaucetGrid.faucets[position]);
+        FaucetGrid.ivList[position] = imageView;
         return imageView;
     }
 }
